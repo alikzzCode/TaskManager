@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\StoreRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
+use App\Models\Task;
 use App\Models\User;
 
 class UsersController extends Controller
@@ -12,7 +13,6 @@ class UsersController extends Controller
     public function all()
     {
         $users = User::paginate(10);
-
         return view('admin.users.all', compact('users'));
     }
 
@@ -30,6 +30,7 @@ class UsersController extends Controller
             'password' => $validatedData['password'],
             'role' => $validatedData['role'],
         ]);
+        $createdUser->assignRole($validatedData['role']);
 
         if (!$createdUser) {
             return back()->with('failed', 'کاربر ایجاد نشد');

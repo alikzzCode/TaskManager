@@ -55,9 +55,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>کاربر</label>
                                                 <label> کاربر </label>
-                                                <select class="form-control" name="category_id" >
+                                                <select class="form-control" name="user_id" >
                                                     @foreach ($users as $user)
                                                         <option
                                                             value="{{ $user->id }}" {{ $user->id == $task->user_id ? 'selected' : '' }}>{{ $user->name }}</option>
@@ -67,11 +66,25 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="form-group">
+                                            <label> اولویت </label>
+                                            <select class="form-control" name="priority">
+                                                <option value="high">
+                                                    زیاد
+                                                </option>
+                                                <option value="medium">
+                                                    متوسط
+                                                </option>
+                                                <option value="low">
+                                                    کم
+                                                </option>
+                                            </select>
+                                        </div>
                                         <div class="col-md-3">
                                             <form class="form-group">
                                                 <label>ددلاین</label>
                                                 <input type="datetime-local" class="form-control"
-                                                       name="expectedEndTime">
+                                                       name="expectedEndDate">
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">

@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreRequest;
 use App\Http\Requests\Admin\Categories\UpdateRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriesController extends Controller
 {
     public function create()
     {
-        return view('admin.categories.create');
-
+        $loggedInUser = Auth::check()->hasRole('admin');
+        if($loggedInUser) {
+            return view('admin.categories.create');
+        }
+        return view('frontend.tasks.all');
     }
 
     public function store(StoreRequest $request)
@@ -46,7 +50,8 @@ class CategoriesController extends Controller
     public function edit($category_id)
     {
         $category = Category::find($category_id);
-        return view('admin.categories.edit', compact('category'));
+        return view('admin.categori.
+        es.edit', compact('category'));
 
     }
 

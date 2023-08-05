@@ -51,9 +51,9 @@
                                       <div class="form-group">
                                           <label>نقش کاربری</label>
                                           <select class="form-control" name="role">
-                                              <option value="یوزر" {{ $user->role == 'یوزر' ? 'selected' : ''}}>یوزر</option>
-                                              <option value="مدیر" {{ $user->role == 'مدیر' ? 'selected' : ''}}>مدیر</option>
-                                              <option value="ادمین" {{ $user->role == 'ادمین' ? 'selected' : ''}}>ادمین</option>
+                                              <option value="user" {{ $user->role == 'user' ? 'selected' : ''}}>یوزر</option>
+                                              <option value="manager" {{ $user->role == 'manager' ? 'selected' : ''}}>مدیر</option>
+                                              <option value="admin" {{ $user->role == 'admin' ? 'selected' : ''}}>ادمین</option>
                                           </select>
                                       </div>
                                   </div>

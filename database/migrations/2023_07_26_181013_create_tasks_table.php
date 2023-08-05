@@ -21,14 +21,12 @@ return new class extends Migration {
             $table->unsignedBigInteger('updated_by');
             $table->foreign('updated_by')->references('id')->on('users');
             $table->enum('priority', ['high', 'medium', 'low']);
-            $table->char('source_url')->nullable();
             $table->char('title');
             $table->text('description');
-            $table->float('hours');
-            $table->enum('status', ['Done', 'In Progress']);
+            $table->enum('status', ['Done', 'Needs Review', 'In Progress']);
             $table->dateTime('expectedEndDate');
             $table->dateTime('actualEndDate')->nullable();
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

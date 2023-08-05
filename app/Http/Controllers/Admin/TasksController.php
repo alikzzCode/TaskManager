@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Tasks\StoreRequest;
 use App\Http\Requests\Admin\Tasks\UpdateRequest;
+use App\Mail\TaskAssigned;
+use App\Mail\TaskReminder;
+use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Task;
 use App\Models\User;
 use App\Utilities\ImageUploader;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -34,24 +38,27 @@ class TasksController extends Controller
     function store(StoreRequest $request)
     {
         $validatedData = $request->validated();
-//        $userId = Auth::id();
+        $userId = Auth::id();
         $createdTask = Task::create([
 
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'category_id' => $validatedData['category_id'],
-            'user_id' => 1,
+            'user_id' => $validatedData['user_id'],
             'priority' => $validatedData['priority'],
             'expectedEndDate' => $validatedData['expectedEndDate'],
-            'created_by' => 1,
-            'updated_by' => 1,
-            'hours' => 10,
+            'created_by' => $userId,
+            'updated_by' => $userId,
+            'status' => 'In Progress',
         ]);
 
         if (!$this->uploadAttach($createdTask, $validatedData)) {
             return back()->with('failed', 'تسک ایجاد نشد');
 
         }
+        $assigneeId = $validatedData['user_id'];
+        $dueEmail = user::where('id', '=', $assigneeId)->value('email');;
+        mail::to($dueEmail)->send(new TaskAssigned());
         return back()->with('success', 'تسک ایجاد شد');
 
 
@@ -63,7 +70,7 @@ class TasksController extends Controller
         $categories = category::all();
         $users = user::all();
         $task = task::findorfail($task_id);
-        return view('admin.tasks.edit', compact('task' , 'categories' ,'users' ));
+        return view('admin.tasks.edit', compact('task', 'categories', 'users'));
     }
 
 
@@ -79,13 +86,21 @@ class TasksController extends Controller
             'category_id' => $validatedData['category_id'],
             'user_id' => $validatedData['user_id'],
             'priority' => $validatedData['priority'],
-            'expectedEndTime' => $validatedData['expectedEndTime'],
+            'expectedEndDate' => $validatedData['expectedEndDate'],
         ]);
 
         if (!$this->uploadAttach($task, $validatedData or !$updatedTask)) {
             return back()->with('failed', 'ضمیمه اپدیت نشد');
 
         }
+        $assignUser = task::where('id', '=', $task_id)->value('user_id');
+        if ($assignUser !== $validatedData['user_id']) {
+            $assigneeId = $validatedData['user_id'];
+            $dueEmail = user::where('id', '=', $assigneeId)->value('email');;
+            mail::to($dueEmail)->send(new TaskAssigned());
+            return back()->with('success', 'تسک اپدیت شد');
+        }
+
         return back()->with('success', 'تسک اپدیت شد');
 
 
@@ -107,24 +122,29 @@ class TasksController extends Controller
 
     private function uploadAttach($createdTask, $validatedData)
     {
-        $path = null;
-        $data = [];
+//        $path = null;
         try {
             if (isset($validatedData['source_url'])) {
                 $path = 'Tasks/' . $createdTask->id . '/' . $validatedData['source_url']->getClientOriginalName();
                 ImageUploader::upload($validatedData['source_url'], $path, 'local_storage');
-                $data += ['source_url' => $path];
-            }
+                $attachedFile = Attachment::create(["name" => $path, 'task_id' => $createdTask->id]);
 
-            $UpdatedTask = $createdTask->update($data);
+                if (!$attachedFile) {
+                    throw new \Exception('ضمیمه اپلود نشد');
+                }
+                return true;
 
-            if (!$UpdatedTask) {
-                throw new \Exception('ضمیمه اپلود نشد');
+
             }
             return true;
 
-        } catch (\Exception $e) {
+        } catch
+        (\Exception $e) {
             return false;
         }
+
+
     }
 }
+
+

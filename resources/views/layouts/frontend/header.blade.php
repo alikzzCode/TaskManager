@@ -49,8 +49,8 @@
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        راهنمای خرید و قوانین
+                    <a href="{{route('auth.logout')}}" class="flex-c-m trans-04 p-lr-25">
+                        خروج
                     </a>
 
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
@@ -65,7 +65,6 @@
 
                 <!-- Logo desktop -->
                 <a href="/" class="logo">
-                    <img src="/images/icons/logo-01.png" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -75,22 +74,19 @@
                         <li class="active-menu">
                             <a href="/">صفحه اصلی</a>
                         </li>
+                        @role('admin')
                         <li>
-                            <a href="/">تماس با ما</a>
+                            <a href="{{route('admin.tasks.all')}}">صفحه ادمین</a>
                         </li>
-                    </ul>
+                        @endrole                    </ul>
                 </div>
 
                 <!-- Icon header -->
                 <div class="wrap-icon-header flex-w flex-r-m">
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                         <i class="zmdi zmdi-search"></i>
-                    </div>
 
-{{--                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{ count(json_decode(Cookie::get('basket'), true)) }}">--}}
-                        <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
-                </div>
             </nav>
         </div>
     </div>
@@ -108,11 +104,13 @@
                 <i class="zmdi zmdi-search"></i>
             </div>
 
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+                 data-notify="2">
                 <i class="zmdi zmdi-shopping-cart"></i>
             </div>
 
-            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
+            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
+               data-notify="0">
                 <i class="zmdi zmdi-favorite-outline"></i>
             </a>
         </div>
@@ -132,9 +130,11 @@
             <li>
                 <a href="/">صفحه اصلی</a>
             </li>
+            @role('admin')
             <li>
-                <a href="/">تماس با ما</a>
+                <a href="{{route('admin.tasks.all')}}">صفحه ادمین</a>
             </li>
+            @endrole
         </ul>
     </div>
 
@@ -172,35 +172,35 @@
 
         <div class="header-cart-content flex-w js-pscroll">
             <ul class="header-cart-wrapitem w-full">
-{{--                @foreach (json_decode(Cookie::get('basket'), true) as $id => $value)--}}
-{{--                <li class="header-cart-item flex-w flex-t m-b-12">--}}
-{{--                    <a href="{{ route('home.basket.remove', $id) }}">--}}
-{{--                        <div class="header-cart-item-img">--}}
-{{--                            <img src="/{{ $value['demo_url'] }}" alt="IMG">--}}
-{{--                        </div>--}}
-{{--                    </a>--}}
+                {{--                @foreach (json_decode(Cookie::get('basket'), true) as $id => $value)--}}
+                {{--                <li class="header-cart-item flex-w flex-t m-b-12">--}}
+                {{--                    <a href="{{ route('home.basket.remove', $id) }}">--}}
+                {{--                        <div class="header-cart-item-img">--}}
+                {{--                            <img src="/{{ $value['demo_url'] }}" alt="IMG">--}}
+                {{--                        </div>--}}
+                {{--                    </a>--}}
 
-{{--                    <div class="header-cart-item-txt p-t-8">--}}
-{{--                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">--}}
-{{--                            {{ $value['title'] }}--}}
-{{--                        </a>--}}
+                {{--                    <div class="header-cart-item-txt p-t-8">--}}
+                {{--                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">--}}
+                {{--                            {{ $value['title'] }}--}}
+                {{--                        </a>--}}
 
-{{--                        <span class="header-cart-item-info">--}}
-{{--								{{ $value['price'] }} هزار تومان--}}
-{{--							</span>--}}
-{{--                    </div>--}}
-{{--                </li>--}}
-{{--                @endforeach--}}
+                {{--                        <span class="header-cart-item-info">--}}
+                {{--								{{ $value['price'] }} هزار تومان--}}
+                {{--							</span>--}}
+                {{--                    </div>--}}
+                {{--                </li>--}}
+                {{--                @endforeach--}}
             </ul>
 
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40">
-{{--                    جمع کل: {{ array_sum(array_column(json_decode(Cookie::get('basket'), true), 'price')) }} هزار تومان--}}
+                    {{--                    جمع کل: {{ array_sum(array_column(json_decode(Cookie::get('basket'), true), 'price')) }} هزار تومان--}}
                 </div>
 
                 <div class="header-cart-buttons flex-w w-full">
-{{--                    <a href="{{ route('home.checkout') }}" class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">--}}
-                        مشاهده سبد خرید و پرداخت
+                    {{--                    <a href="{{ route('home.checkout') }}" class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">--}}
+                    مشاهده سبد خرید و پرداخت
                     </a>
                 </div>
             </div>

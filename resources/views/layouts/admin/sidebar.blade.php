@@ -6,10 +6,10 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <li class="nav-item">
                         <a href="index.php" class="nav-link text-center mb-4">
-                            <img src="/images/icons/logo-01.png" style="filter: brightness(0) invert(1);">
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
@@ -33,19 +33,13 @@
                                     <p>لیست تسک ها</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="nav-icon fa fa-search"></i>
-                                    <p class="text">جستجو پیشرفته</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link ">
                             <i class="nav-icon fa fa-sitemap"></i>
                             <p>دسته بندی ها
-                            <i class="right fa fa-angle-left"></i>
+                                <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -65,7 +59,6 @@
                         </ul>
                     </li>
 
-{{--                    @role('admin')--}}
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-user"></i>
@@ -91,14 +84,21 @@
                             </li>
                         </ul>
                     </li>
-{{--                    @endrole()--}}
 
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{route('admin.dash.main')}}" class="nav-link">
                             <i class="nav-icon fa fa-bar-chart"></i>
                             <p class="text">گزارش ها</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('auth.logout')}}" class="nav-link">
+                            <i class="nav-icon fa fa-sign-out"></i>
+                            <p class="text">خروج</p>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

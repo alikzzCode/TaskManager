@@ -23,5 +23,6 @@ class AdminSeeder extends Seeder
             ]
         );
         $user->assignRole('ادمین');
+
     }
 }

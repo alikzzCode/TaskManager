@@ -24,11 +24,11 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'required|min:3',
             'category_id' => 'required|exists:categories,id',
-//            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'priority' => 'required|in:high,medium,low',
             'description' => 'required|min:10',
             'expectedEndDate' => 'required|date|after:start_date',
-            'source_url' => 'required|image|mimes:png,jpg,jpeg,'
+            'source_url' => 'image|mimes:png,jpg,jpeg,'
         ];
     }
 }

@@ -11,25 +11,25 @@
                 <ul>
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            کارت ویزیت
+                             d
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            تراکت
+                            a
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            بنر
+                            c
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            وکتور
+                            g
                         </a>
                     </li>
                 </ul>
@@ -43,25 +43,25 @@
                 <ul>
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            درباره ما
+
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            تماس با ما
+                             با
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            نحوه خرید
+                            ریدas
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="mtext-106 cl7 hov-cl1 trans-04">
-                            قوانین
+                            aa
                         </a>
                     </li>
                 </ul>
@@ -69,11 +69,10 @@
 
             <div class="col-sm-12 col-lg-6 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    ارتباط با ما
+                    aa
                 </h4>
 
                 <p class="mtext-106 cl7" style="line-height: 40px">
-                    بدلیل شرایط حساس کنونی و شیوع کرونا تیم سون لرن تا اطلاع ثانوی به صورت دورکار فعالیت دارد.
                 </p>
 
                 <div class="p-t-27">

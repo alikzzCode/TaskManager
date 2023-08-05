@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'priority' => 'required|exists:tasks,priority',
             'description' => 'required|min:10',
-            'expectedEndTime' => 'required|date|after:start_date',
+            'expectedEndDate' => 'date|after:start_date',
         ];
     }
 }

@@ -55,10 +55,10 @@
                                       <div class="form-group">
                                           <label>نقش کاربری</label>
                                           <select class="form-control" name="role">
-                                              <option value="یوزر">کاربر عادی</option>
+                                              <option value="user">کاربر عادی</option>
                                               {{-- <option value="2">طراح و فروشنده</option> --}}
-                                              <option value="منیجر">مدیر</option>
-                                              <option value="ادمین">ادمین</option>
+                                              <option value="manager">مدیر</option>
+                                              <option value="admin">ادمین</option>
 
                                           </select>
                                       </div>

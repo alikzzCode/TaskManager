@@ -54,7 +54,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label> کاربر </label>
-                                                <select class="form-control" name="category_id">
+                                                <select class="form-control" name="user_id">
                                                     @foreach ($users as $user)
                                                         <option
                                                             value="{{ $user->id }}">{{ $user->name }}</option>

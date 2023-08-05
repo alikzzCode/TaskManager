@@ -11,7 +11,7 @@
           <div class="col-12">
             <h1 class="m-0 text-dark">
                 <a class="nav-link drawer" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-                محصولات
+                تسک ها
                 <a class="btn btn-primary float-left text-white py-2 px-4" href="{{ route('admin.tasks.create') }}">افزودن تسک جدید</a>
             </h1>
           </div><!-- /.col -->
@@ -28,7 +28,7 @@
               <div class="col-12">
                   <div class="card">
                       <div class="card-header">
-                          <h3 class="card-title">لیست محصولات</h3>
+                          <h3 class="card-title">لیست تسک ها</h3>
 
                           <div class="card-tools">
                               <div class="input-group input-group-sm" style="width: 150px;">
@@ -71,7 +71,7 @@
                                 <td>
                                     <a href="{{ route('admin.tasks.download.attachments', $task->id) }}" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
                                 </td>
-                                <td>{{ $task->actualEndDate ?? 'none' }}</td>
+                                <td>{{ $task->actualEndDate ?? 'On Going' }}</td>
                                 <td>{{ $task->priority }} </td>
                                 <td>{{ $task->created_at }}</td>
                                 <td>

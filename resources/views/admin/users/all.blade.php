@@ -50,7 +50,6 @@
                                          <th>آیدی</th>
                                          <th>نام</th>
                                          <th>ایمیل</th>
-                                         <th>تسک ها</th>
                                          <th>نقش کاربری</th>
                                          <th>تاریخ عضویت</th>
                                          <th>عملیات</th>
@@ -61,8 +60,7 @@
                                              <td>{{ $user->id }}</td>
                                              <td>{{ $user->name }}</td>
                                              <td>{{ $user->email }}</td>
-                                             <td>{{ $user->task->user_id ?? 'none' }}</td>
-                                             <td>{{ $user->role->name ?? 'none' }}</td>
+                                             <td>{!! print $user->getRoleNames() !!}</td>
                                              <td>{{ $user->created_at }}</td>
                                              <td>
                                                  <a href="{{ route('admin.users.edit', $user->id) }}"
