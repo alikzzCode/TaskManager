@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Tasks\StoreRequest;
 use App\Http\Requests\Admin\Tasks\UpdateRequest;
 use App\Http\Requests\FrontEnd\ChangeRequest;
 use App\Http\Requests\FrontEnd\DoneRequest;
@@ -54,16 +55,16 @@ class TaskController extends Controller
         $loggedInUserID = auth()->user()->id;
         $task = task::findorfail($task_id);
         $similarTasks = task::where('category_id', $task->category_id)->take(4)->get();
-        $attachments =  attachment::where('id','==', $task->file_id)->get();
+        $attachments = attachment::where('id', '==', $task->file_id)->get();
         $comments = Comment::where('task_id', $task_id)->get();
 
         if ($loggedInUser = Auth::user()->hasRole(['admin', 'manager'])) {
-            return view('frontend.tasks.show', compact('task', 'similarTasks', 'attachments','comments'));
+            return view('frontend.tasks.show', compact('task', 'similarTasks', 'attachments', 'comments'));
 
         }
         if ($task->user_id === $loggedInUserID) {
 
-            return view('frontend.tasks.show', compact('task', 'similarTasks', 'attachments','comments'));
+            return view('frontend.tasks.show', compact('task', 'similarTasks', 'attachments', 'comments'));
 
         } else {
             $categories = Category::all();
@@ -160,6 +161,7 @@ class TaskController extends Controller
 
 
     }
+
     private function findfilter(string $className, string $methodName)
     {
         $baseNamespace = "App\Http\Controllers\Filter\\";
@@ -174,43 +176,71 @@ class TaskController extends Controller
         return $object->{$methodName}();
     }
 
-   public function create()
+    public function create()
     {
         $loggedInUser = Auth::user();
         $categories = Category::all();
         return view('frontend.tasks.add ', compact('categories', 'loggedInUser'));
     }
 
-    public
-    function store(DoneRequest $request,$task_id )
-    {
-        dd($task_id);
-        $validatedData = $request->validated();
-        $userId = Auth::id();
-        $task = task::findorfail($id);
-        $task->update([
-            'updated_by' => $userId,
-
-        ]);
-
-        if (isset($validatedData['source_url'])) {
-            $path = 'Tasks/' . $task->id . '/' . $validatedData['source_url']->getClientOriginalName();
-            ImageUploader::upload($validatedData['source_url'], $path, 'local_storage');
-            $attachedFile = Attachment::create(["name" => $path, 'task_id' => $task->id]);
-
-            if (!$attachedFile) {
-                throw new \Exception('ضمیمه اپلود نشد');
-            }
-            return true;
-
-//        if (!$this->uploadAttach($createdTask, $validatedData)) {
-//            return back()->with('failed', 'تسک ایجاد نشد');
+//    public
+//    function store(DoneRequest $request,$task_id )
+//    {
+//        $validatedData = $request->validated();
+//        $userId = Auth::id();
+//        $task = task::findorfail($task_id);
+//        $task->update([
+//            'updated_by' => $userId,
+//
+//        ]);
+//
+//        if (isset($validatedData['source_url'])) {
+//            $path = 'Tasks/' . $task->id . '/' . $validatedData['source_url']->getClientOriginalName();
+//            ImageUploader::upload($validatedData['source_url'], $path, 'local_storage');
+//            $attachedFile = Attachment::create(["name" => $path, 'task_id' => $task->id]);
+//
+//            if (!$attachedFile) {
+//                throw new \Exception('ضمیمه اپلود نشد');
+//            }
+//            return true;
+//
+////        if (!$this->uploadAttach($createdTask, $validatedData)) {
+////            return back()->with('failed', 'تسک ایجاد نشد');
+////
+////        }
+////        return back()->with('success', 'تسک ایجاد شد');
+//
 //
 //        }
-//        return back()->with('success', 'تسک ایجاد شد');
+//    }
+    public function store(StoreRequest $request)
 
+    {
+        $validatedData = $request->validated();
+        $userId = Auth::id();
+        $createdTask = Task::create([
+
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'category_id' => $validatedData['category_id'],
+            'user_id' => $validatedData['user_id'],
+            'priority' => $validatedData['priority'],
+            'expectedEndDate' => $validatedData['expectedEndDate'],
+            'created_by' => $userId,
+            'updated_by' => $userId,
+            'status' => 'In Progress',
+        ]);
+
+        if (!$this->uploadAttach($createdTask, $validatedData)) {
+            return back()->with('failed', 'تسک ایجاد نشد');
 
         }
+        $assigneeId = $validatedData['user_id'];
+        $dueEmail = user::where('id', '=', $assigneeId)->value('email');;
+        mail::to($dueEmail)->send(new TaskAssigned());
+        return back()->with('success', 'تسک ایجاد شد');
+
+
     }
 
     public function downloadAttachments($task_id)
